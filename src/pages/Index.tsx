@@ -164,12 +164,12 @@ const Index = () => {
             </p>
           </div>
           <a
-            href="https://github.com"
+            href="https://www.linkedin.com/in/protmaks/"
             target="_blank"
             rel="noreferrer"
             className="text-sm text-muted-foreground hover:text-foreground"
           >
-            GitHub
+            LinkedIn
           </a>
         </div>
       </header>
