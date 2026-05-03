@@ -218,7 +218,10 @@ const Index = () => {
             </div>
           ) : parsed ? (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100">
+              <Badge
+                className="border-transparent text-white hover:opacity-90"
+                style={{ backgroundImage: "linear-gradient(135deg, hsl(var(--brand-start)), hsl(var(--brand-end)))" }}
+              >
                 <Check className="mr-1 h-3 w-3" /> Valid
               </Badge>
               {parsed.lenient && (
