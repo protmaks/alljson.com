@@ -9,6 +9,7 @@ import { Copy, Check, Trash2, Wand2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { JsonTree } from "@/components/JsonTree";
 import { RobotEyeLogo } from "@/components/RobotEyeLogo";
+import { LineNumberedTextarea } from "@/components/LineNumberedTextarea";
 import { parseLenient } from "@/lib/lenientJson";
 import {
   buildSelect,
