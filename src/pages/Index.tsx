@@ -189,7 +189,7 @@ const Index = () => {
 
       <main className="mx-auto grid max-w-7xl gap-6 px-4 py-6 sm:px-6 lg:grid-cols-2">
         {/* INPUT */}
-        <section className="space-y-3">
+        <section className="min-w-0 space-y-3">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <h2 className="text-sm font-medium text-muted-foreground">JSON input</h2>
@@ -213,7 +213,7 @@ const Index = () => {
                 </>
               ) : null}
             </div>
-            <div className="flex gap-2">
+            <div className="flex min-w-0 flex-wrap gap-2">
               <Button size="sm" variant="outline" onClick={() => setInput(SAMPLE)}>
                 Sample
               </Button>
@@ -273,10 +273,10 @@ const Index = () => {
         </section>
 
         {/* TREE + SQL */}
-        <section className="flex flex-col space-y-3 lg:h-[calc(100vh-140px)] lg:min-h-[520px]">
+        <section className="flex min-w-0 flex-col space-y-3 lg:h-[calc(100vh-140px)] lg:min-h-[520px]">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <h2 className="text-sm font-medium text-muted-foreground">Tree & SQL</h2>
-            <div className="flex items-center gap-2">
+            <div className="flex min-w-0 flex-wrap items-center gap-2">
               <span className="text-xs text-muted-foreground">Table:</span>
               <Input
                 value={table}
