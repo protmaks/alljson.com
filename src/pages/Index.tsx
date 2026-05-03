@@ -264,7 +264,7 @@ const Index = () => {
         </section>
 
         {/* TREE + SQL */}
-        <section className="space-y-3">
+        <section className="flex flex-col space-y-3 lg:h-[calc(100vh-140px)] lg:min-h-[520px]">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <h2 className="text-sm font-medium text-muted-foreground">Tree & SQL</h2>
             <div className="flex items-center gap-2">
@@ -335,7 +335,7 @@ const Index = () => {
           )}
 
           {/* Tree */}
-          <Card className="p-3">
+          <Card className="flex min-h-0 flex-1 flex-col p-3">
             <div className="mb-2 flex items-center gap-2">
               <Input
                 value={filter}
@@ -358,7 +358,7 @@ const Index = () => {
                 Collapse
               </Button>
             </div>
-            <div className="max-h-[280px] overflow-auto rounded-md border border-border bg-muted/30 p-3">
+            <div className="min-h-[200px] flex-1 overflow-auto rounded-md border border-border bg-muted/30 p-3">
               {parsed ? (
                 <JsonTree
                   data={parsed.value}
@@ -377,7 +377,7 @@ const Index = () => {
           </Card>
 
           {/* SQL output */}
-          <Card className="p-3">
+          <Card className="flex min-h-0 flex-1 flex-col p-3">
             <div className="mb-2 flex items-center justify-between">
               <span className="text-sm font-medium">
                 {mode === "select" ? "Selected fields → SQL" : "Flatten everything"}
@@ -402,7 +402,7 @@ const Index = () => {
                 </Button>
               </div>
             </div>
-            <pre className="max-h-[260px] overflow-auto whitespace-pre rounded-md border border-border bg-muted/30 p-3 font-mono text-xs">
+            <pre className="min-h-[160px] flex-1 overflow-auto whitespace-pre rounded-md border border-border bg-muted/30 p-3 font-mono text-xs">
               {mode === "select"
                 ? selected.length
                   ? selectSql
