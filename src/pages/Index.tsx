@@ -264,7 +264,7 @@ const Index = () => {
         </section>
 
         {/* TREE + SQL */}
-        <section className="space-y-3">
+        <section className="flex flex-col space-y-3 lg:h-[calc(100vh-140px)] lg:min-h-[520px]">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <h2 className="text-sm font-medium text-muted-foreground">Tree & SQL</h2>
             <div className="flex items-center gap-2">
