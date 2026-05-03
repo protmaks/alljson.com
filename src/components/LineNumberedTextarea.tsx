@@ -63,7 +63,7 @@ export function LineNumberedTextarea({
   return (
     <div
       className={cn(
-        "relative flex overflow-hidden rounded-md border border-input bg-background font-mono text-sm",
+        "relative flex w-full max-w-full min-w-0 overflow-hidden rounded-md border border-input bg-background font-mono text-sm",
         errorLine ? "border-destructive/50" : "",
         className
       )}
@@ -71,7 +71,7 @@ export function LineNumberedTextarea({
       <div
         ref={gutterRef}
         aria-hidden="true"
-        className="select-none overflow-hidden whitespace-pre py-2 pl-3 pr-2 text-right text-muted-foreground/70 bg-muted/40 border-r border-border"
+        className="shrink-0 select-none overflow-hidden whitespace-pre py-2 pl-3 pr-2 text-right text-muted-foreground/70 bg-muted/40 border-r border-border"
         style={{ lineHeight: `${LINE_HEIGHT}px`, minWidth: `${String(lineCount).length + 1}ch` }}
       >
         {Array.from({ length: lineCount }, (_, i) => {
@@ -89,7 +89,7 @@ export function LineNumberedTextarea({
         })}
       </div>
 
-      <div className="relative flex-1">
+      <div className="relative min-w-0 flex-1">
         {/* Error line highlight overlay (behind textarea) */}
         {errorLine && (
           <div
@@ -112,7 +112,7 @@ export function LineNumberedTextarea({
           onChange={(e) => onChange(e.target.value)}
           spellCheck={false}
           placeholder={placeholder}
-          className="relative h-full w-full resize-none bg-transparent px-3 py-2 outline-none"
+          className="relative h-full w-full min-w-0 max-w-full resize-none bg-transparent px-3 py-2 outline-none"
           style={{ lineHeight: `${LINE_HEIGHT}px` }}
         />
       </div>
