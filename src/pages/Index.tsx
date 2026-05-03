@@ -187,7 +187,7 @@ const Index = () => {
         </div>
       </header>
 
-      <main className="mx-auto grid max-w-7xl gap-6 px-6 py-6 lg:grid-cols-2">
+      <main className="mx-auto grid max-w-7xl gap-6 px-4 py-6 sm:px-6 lg:grid-cols-2">
         {/* INPUT */}
         <section className="space-y-3">
           <div className="flex items-center justify-between">
