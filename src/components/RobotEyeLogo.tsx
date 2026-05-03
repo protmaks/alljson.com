@@ -32,7 +32,7 @@ export function RobotEyeLogo() {
 
   return (
     <h1 className="flex items-center gap-0.5 text-3xl font-extrabold tracking-tight leading-none">
-      <span className="text-green-800">All</span>
+      <span className="text-emerald-700">All</span>
       <span className="bg-gradient-to-br from-primary via-primary to-accent bg-clip-text text-transparent">
         J
       </span>
