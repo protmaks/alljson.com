@@ -249,18 +249,18 @@ const Index = () => {
             </div>
           </div>
 
+          {error && (
+            <div className="rounded-md border border-destructive/40 bg-destructive/5 p-3 text-sm text-destructive">
+              <span className="font-medium">Invalid:</span> {error}
+            </div>
+          )}
+
           <LineNumberedTextarea
             value={input}
             onChange={setInput}
             placeholder="Paste JSON or JSON-like text here…"
             className="h-[calc(100vh-220px)] min-h-[420px]"
           />
-
-          {error && (
-            <div className="rounded-md border border-destructive/40 bg-destructive/5 p-3 text-sm text-destructive">
-              <span className="font-medium">Invalid:</span> {error}
-            </div>
-          )}
         </section>
 
         {/* TREE + SQL */}
