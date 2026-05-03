@@ -220,6 +220,21 @@ const Index = () => {
               </Button>
               <Button
                 size="sm"
+                variant="outline"
+                onClick={async () => {
+                  if (!input) return;
+                  try {
+                    await navigator.clipboard.writeText(input);
+                    toast.success("Copied to clipboard");
+                  } catch {
+                    toast.error("Copy failed");
+                  }
+                }}
+              >
+                <Copy className="mr-1 h-3.5 w-3.5" /> Copy
+              </Button>
+              <Button
+                size="sm"
                 variant="ghost"
                 onClick={() => {
                   setInput("");
