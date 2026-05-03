@@ -53,7 +53,6 @@ export function RobotEyeLogo() {
           }}
         />
       </span>
-      </span>
       <span className="bg-gradient-to-br from-primary via-primary to-accent bg-clip-text text-transparent">
         N
       </span>
