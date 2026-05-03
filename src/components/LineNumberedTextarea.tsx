@@ -55,6 +55,9 @@ export function LineNumberedTextarea({ value, onChange, placeholder, className, 
         className="flex-1 resize-none bg-transparent px-3 py-2 outline-none"
         style={{ lineHeight: "1.5rem" }}
       />
+      {topRight && (
+        <div className="absolute right-2 top-2 z-10">{topRight}</div>
+      )}
     </div>
   );
 }
