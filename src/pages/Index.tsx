@@ -388,9 +388,6 @@ const Index = () => {
         </section>
       </main>
 
-      <footer className="border-t border-border py-6 text-center text-xs text-muted-foreground">
-        AllJSON — static site, runs entirely in your browser. Hostable on GitHub Pages.
-      </footer>
     </div>
   );
 };
