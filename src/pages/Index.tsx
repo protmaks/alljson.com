@@ -245,6 +245,24 @@ const Index = () => {
             onChange={setInput}
             placeholder="Paste JSON or JSON-like text here…"
             className="h-[calc(100vh-220px)] min-h-[420px]"
+            topRight={
+              <Button
+                size="sm"
+                variant="outline"
+                className="h-7 gap-1 px-2 shadow-sm"
+                onClick={async () => {
+                  if (!input) return;
+                  try {
+                    await navigator.clipboard.writeText(input);
+                    toast.success("Copied to clipboard");
+                  } catch {
+                    toast.error("Copy failed");
+                  }
+                }}
+              >
+                <Copy className="h-3.5 w-3.5" /> Copy
+              </Button>
+            }
           />
         </section>
 
