@@ -245,6 +245,8 @@ const Index = () => {
           )}
 
           <LineNumberedTextarea
+            errorLine={errorLoc?.line ?? null}
+            errorColumn={errorLoc?.column ?? null}
             value={input}
             onChange={setInput}
             placeholder="Paste JSON or JSON-like text here…"
