@@ -9,6 +9,7 @@ import { Copy, Check, Trash2, Wand2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { JsonTree } from "@/components/JsonTree";
 import { RobotEyeLogo } from "@/components/RobotEyeLogo";
+import { LineNumberedTextarea } from "@/components/LineNumberedTextarea";
 import { parseLenient } from "@/lib/lenientJson";
 import {
   buildSelect,
@@ -248,12 +249,11 @@ const Index = () => {
             </div>
           </div>
 
-          <Textarea
+          <LineNumberedTextarea
             value={input}
-            onChange={(e) => setInput(e.target.value)}
-            spellCheck={false}
+            onChange={setInput}
             placeholder="Paste JSON or JSON-like text here…"
-            className="h-[calc(100vh-220px)] min-h-[420px] resize-none font-mono text-sm"
+            className="h-[calc(100vh-220px)] min-h-[420px]"
           />
 
           {error && (
