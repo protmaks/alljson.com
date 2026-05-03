@@ -51,12 +51,7 @@ export function RobotEyeLogo() {
 
   return (
     <h1 className="flex items-center gap-0.5 text-3xl font-extrabold tracking-tight leading-none">
-      <span
-        className="bg-clip-text text-transparent"
-        style={{ backgroundImage: "linear-gradient(135deg, hsl(var(--brand-start)), hsl(var(--brand-end)))" }}
-      >
-        All
-      </span>
+      <span className="text-foreground">All</span>
       <span
         className="bg-clip-text text-transparent"
         style={{ backgroundImage: "linear-gradient(135deg, hsl(var(--brand-start)), hsl(var(--brand-end)))" }}
