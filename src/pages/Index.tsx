@@ -78,8 +78,9 @@ const Index = () => {
         setError(null);
       } else {
         setParsed(null);
-        const loc = r.line ? ` (line ${r.line}, col ${r.column})` : "";
-        setError(r.error + loc);
+        const err = r as { ok: false; error: string; line?: number; column?: number };
+        const loc = err.line ? ` (line ${err.line}, col ${err.column})` : "";
+        setError(err.error + loc);
       }
     }, 200);
     return () => clearTimeout(t);
