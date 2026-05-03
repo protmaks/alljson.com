@@ -43,7 +43,7 @@ export function RobotEyeLogo() {
       <span
         ref={eyeRef}
         aria-label="O"
-        className="relative inline-flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent ring-2 ring-primary/40"
+        className="relative inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary"
       >
         <span className="absolute inset-[3px] rounded-full bg-background" />
         <span
@@ -52,6 +52,7 @@ export function RobotEyeLogo() {
             transform: `translate(${pupil.x}px, ${pupil.y}px)`,
           }}
         />
+      </span>
       </span>
       <span className="bg-gradient-to-br from-primary via-primary to-accent bg-clip-text text-transparent">
         N
