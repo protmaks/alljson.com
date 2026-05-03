@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { ReactNode, useEffect, useMemo, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -6,9 +6,10 @@ interface Props {
   onChange: (v: string) => void;
   placeholder?: string;
   className?: string;
+  topRight?: ReactNode;
 }
 
-export function LineNumberedTextarea({ value, onChange, placeholder, className }: Props) {
+export function LineNumberedTextarea({ value, onChange, placeholder, className, topRight }: Props) {
   const taRef = useRef<HTMLTextAreaElement>(null);
   const gutterRef = useRef<HTMLDivElement>(null);
 
@@ -54,6 +55,9 @@ export function LineNumberedTextarea({ value, onChange, placeholder, className }
         className="flex-1 resize-none bg-transparent px-3 py-2 outline-none"
         style={{ lineHeight: "1.5rem" }}
       />
+      {topRight && (
+        <div className="absolute right-2 top-2 z-10">{topRight}</div>
+      )}
     </div>
   );
 }
