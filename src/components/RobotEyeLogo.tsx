@@ -6,6 +6,9 @@ import { useEffect, useRef, useState } from "react";
  */
 export function RobotEyeLogo() {
   const eyeRef = useRef<HTMLSpanElement>(null);
+  const targetRef = useRef({ x: 0, y: 0 });
+  const currentRef = useRef({ x: 0, y: 0 });
+  const rafRef = useRef<number | null>(null);
   const [pupil, setPupil] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -18,17 +21,33 @@ export function RobotEyeLogo() {
       const dx = e.clientX - cx;
       const dy = e.clientY - cy;
       const dist = Math.hypot(dx, dy) || 1;
-      // Max pupil travel inside the eye (px)
       const max = Math.min(rect.width, rect.height) * 0.18;
       const limited = Math.min(dist, max);
-      setPupil({
+      targetRef.current = {
         x: (dx / dist) * limited,
         y: (dy / dist) * limited,
-      });
+      };
     };
+
+    const tick = () => {
+      // Easing factor — smaller = slower & smoother
+      const ease = 0.06;
+      const c = currentRef.current;
+      const t = targetRef.current;
+      c.x += (t.x - c.x) * ease;
+      c.y += (t.y - c.y) * ease;
+      setPupil({ x: c.x, y: c.y });
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
     window.addEventListener("mousemove", handle);
-    return () => window.removeEventListener("mousemove", handle);
+    rafRef.current = requestAnimationFrame(tick);
+    return () => {
+      window.removeEventListener("mousemove", handle);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, []);
+
 
   return (
     <h1 className="flex items-center gap-0.5 text-3xl font-extrabold tracking-tight leading-none">
