@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://alljson.github.io/sitemap.xml
+Sitemap: https://alljson.com/sitemap.xml
