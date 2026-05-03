@@ -32,9 +32,7 @@ export function RobotEyeLogo() {
 
   return (
     <h1 className="flex items-center gap-0.5 text-3xl font-extrabold tracking-tight leading-none">
-      <span className="bg-gradient-to-br from-primary via-primary to-accent bg-clip-text text-transparent">
-        All
-      </span>
+      <span className="text-green-500">All</span>
       <span className="bg-gradient-to-br from-primary via-primary to-accent bg-clip-text text-transparent">
         J
       </span>
@@ -45,17 +43,15 @@ export function RobotEyeLogo() {
       <span
         ref={eyeRef}
         aria-label="O"
-        className="relative inline-flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent shadow-[0_0_12px_hsl(var(--primary)/0.5)] ring-2 ring-primary/40"
+        className="relative inline-flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent ring-2 ring-primary/40"
       >
         <span className="absolute inset-[3px] rounded-full bg-background" />
         <span
-          className="relative h-3 w-3 rounded-full bg-primary shadow-[0_0_6px_hsl(var(--primary))] transition-transform duration-75 ease-out"
+          className="relative h-2 w-2 rounded-full bg-primary transition-transform duration-75 ease-out"
           style={{
             transform: `translate(${pupil.x}px, ${pupil.y}px)`,
           }}
-        >
-          <span className="absolute left-1/2 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-background" />
-        </span>
+        />
       </span>
       <span className="bg-gradient-to-br from-primary via-primary to-accent bg-clip-text text-transparent">
         N
