@@ -163,14 +163,22 @@ const Index = () => {
               Validate JSON · explore the tree · build SQL
             </p>
           </div>
-          <a
-            href="https://www.linkedin.com/in/protmaks/"
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm text-muted-foreground hover:text-foreground"
-          >
-            LinkedIn
-          </a>
+          <nav className="flex items-center gap-4 text-sm">
+            <a
+              href="/about"
+              className="text-muted-foreground hover:text-foreground"
+            >
+              About
+            </a>
+            <a
+              href="https://www.linkedin.com/in/protmaks/"
+              target="_blank"
+              rel="noreferrer"
+              className="text-muted-foreground hover:text-foreground"
+            >
+              LinkedIn
+            </a>
+          </nav>
         </div>
       </header>
 
