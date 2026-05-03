@@ -190,7 +190,7 @@ const Index = () => {
       <main className="mx-auto grid max-w-7xl gap-6 px-4 py-6 sm:px-6 lg:grid-cols-2">
         {/* INPUT */}
         <section className="space-y-3">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <h2 className="text-sm font-medium text-muted-foreground">JSON input</h2>
               {error ? (
