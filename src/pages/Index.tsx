@@ -253,7 +253,7 @@ const Index = () => {
             onChange={(e) => setInput(e.target.value)}
             spellCheck={false}
             placeholder="Paste JSON or JSON-like text here…"
-            className="h-[420px] resize-none font-mono text-sm"
+            className="h-[calc(100vh-220px)] min-h-[420px] resize-none font-mono text-sm"
           />
 
           {error && (
