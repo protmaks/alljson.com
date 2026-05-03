@@ -47,6 +47,7 @@ const Index = () => {
   );
   const [parsed, setParsed] = useState<{ value: unknown; lenient: boolean } | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [errorLoc, setErrorLoc] = useState<{ line?: number; column?: number } | null>(null);
   const [currentPath, setCurrentPath] = useState<PathSegment[] | null>(null);
   const [selected, setSelected] = useState<PathSegment[][]>([]);
   const [filter, setFilter] = useState("");
@@ -72,17 +73,20 @@ const Index = () => {
       if (!input.trim()) {
         setParsed(null);
         setError(null);
+        setErrorLoc(null);
         return;
       }
       const r = parseLenient(input);
       if (r.ok === true) {
         setParsed({ value: r.value, lenient: r.lenient });
         setError(null);
+        setErrorLoc(null);
       } else {
         setParsed(null);
         const err = r as { ok: false; error: string; line?: number; column?: number };
         const loc = err.line ? ` (line ${err.line}, col ${err.column})` : "";
         setError(err.error + loc);
+        setErrorLoc({ line: err.line, column: err.column });
       }
     }, 200);
     return () => clearTimeout(t);
@@ -241,6 +245,8 @@ const Index = () => {
           )}
 
           <LineNumberedTextarea
+            errorLine={errorLoc?.line ?? null}
+            errorColumn={errorLoc?.column ?? null}
             value={input}
             onChange={setInput}
             placeholder="Paste JSON or JSON-like text here…"
