@@ -73,7 +73,7 @@ const Index = () => {
         return;
       }
       const r = parseLenient(input);
-      if (r.ok) {
+      if (r.ok === true) {
         setParsed({ value: r.value, lenient: r.lenient });
         setError(null);
       } else {
