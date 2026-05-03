@@ -51,28 +51,44 @@ export function RobotEyeLogo() {
 
   return (
     <h1 className="flex items-center gap-0.5 text-3xl font-extrabold tracking-tight leading-none">
-      <span className="text-emerald-700">All</span>
-      <span className="bg-gradient-to-br from-primary via-primary to-accent bg-clip-text text-transparent">
+      <span
+        className="bg-clip-text text-transparent"
+        style={{ backgroundImage: "linear-gradient(135deg, hsl(var(--brand-start)), hsl(var(--brand-end)))" }}
+      >
+        All
+      </span>
+      <span
+        className="bg-clip-text text-transparent"
+        style={{ backgroundImage: "linear-gradient(135deg, hsl(var(--brand-start)), hsl(var(--brand-end)))" }}
+      >
         J
       </span>
-      <span className="bg-gradient-to-br from-primary via-primary to-accent bg-clip-text text-transparent">
+      <span
+        className="bg-clip-text text-transparent"
+        style={{ backgroundImage: "linear-gradient(135deg, hsl(var(--brand-start)), hsl(var(--brand-end)))" }}
+      >
         S
       </span>
       {/* Robotic eye replacing the "O" */}
       <span
         ref={eyeRef}
         aria-label="O"
-        className="relative inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary"
+        className="relative inline-flex h-7 w-7 items-center justify-center rounded-full"
+        style={{ backgroundColor: "hsl(var(--brand-start))" }}
       >
         <span className="absolute inset-[3px] rounded-full bg-background" />
         <span
-          className="relative h-2 w-2 rounded-full bg-primary transition-transform duration-75 ease-out"
+          className="relative h-1.5 w-1.5 rounded-full"
           style={{
             transform: `translate(${pupil.x}px, ${pupil.y}px)`,
+            backgroundColor: "hsl(var(--brand-start))",
           }}
         />
       </span>
-      <span className="bg-gradient-to-br from-primary via-primary to-accent bg-clip-text text-transparent">
+      <span
+        className="bg-clip-text text-transparent"
+        style={{ backgroundImage: "linear-gradient(135deg, hsl(var(--brand-start)), hsl(var(--brand-end)))" }}
+      >
         N
       </span>
     </h1>
