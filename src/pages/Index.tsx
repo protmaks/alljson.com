@@ -186,7 +186,28 @@ const Index = () => {
         {/* INPUT */}
         <section className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-medium text-muted-foreground">JSON input</h2>
+            <div className="flex items-center gap-2">
+              <h2 className="text-sm font-medium text-muted-foreground">JSON input</h2>
+              {error ? (
+                <Badge variant="outline" className="border-destructive/40 text-destructive">
+                  Invalid
+                </Badge>
+              ) : parsed ? (
+                <>
+                  <Badge
+                    className="border-transparent text-white hover:opacity-90"
+                    style={{ backgroundImage: "linear-gradient(135deg, hsl(var(--brand-start)), hsl(var(--brand-end)))" }}
+                  >
+                    <Check className="mr-1 h-3 w-3" /> Valid
+                  </Badge>
+                  {parsed.lenient && (
+                    <Badge variant="outline" className="border-amber-300 text-amber-700">
+                      Auto-fixed
+                    </Badge>
+                  )}
+                </>
+              ) : null}
+            </div>
             <div className="flex gap-2">
               <Button size="sm" variant="outline" onClick={() => setInput(SAMPLE)}>
                 Sample
@@ -220,26 +241,10 @@ const Index = () => {
             className="h-[420px] resize-none font-mono text-sm"
           />
 
-          {error ? (
+          {error && (
             <div className="rounded-md border border-destructive/40 bg-destructive/5 p-3 text-sm text-destructive">
               <span className="font-medium">Invalid:</span> {error}
             </div>
-          ) : parsed ? (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Badge
-                className="border-transparent text-white hover:opacity-90"
-                style={{ backgroundImage: "linear-gradient(135deg, hsl(var(--brand-start)), hsl(var(--brand-end)))" }}
-              >
-                <Check className="mr-1 h-3 w-3" /> Valid
-              </Badge>
-              {parsed.lenient && (
-                <Badge variant="outline" className="border-amber-300 text-amber-700">
-                  Auto-fixed (lenient parse)
-                </Badge>
-              )}
-            </div>
-          ) : (
-            <div className="text-sm text-muted-foreground">Paste something to begin.</div>
           )}
         </section>
 
