@@ -47,6 +47,7 @@ const Index = () => {
   );
   const [parsed, setParsed] = useState<{ value: unknown; lenient: boolean } | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [errorLoc, setErrorLoc] = useState<{ line?: number; column?: number } | null>(null);
   const [currentPath, setCurrentPath] = useState<PathSegment[] | null>(null);
   const [selected, setSelected] = useState<PathSegment[][]>([]);
   const [filter, setFilter] = useState("");
