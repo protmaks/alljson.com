@@ -1,5 +1,6 @@
 // Lenient JSON parser: handles trailing commas, single quotes, unquoted keys,
-// JS comments, and `undefined`/`NaN`/`Infinity`. Falls back from strict JSON.parse.
+// JS comments, `undefined`/`NaN`/`Infinity`, and Python repr (None/True/False,
+// enum objects like <Foo.BAR: 'val'>, dataclass reprs like Foo(key=val)).
 
 export type ParseResult =
   | { ok: true; value: unknown; lenient: boolean }
@@ -16,14 +17,108 @@ function extractPosition(msg: string): number | null {
   return m ? parseInt(m[1], 10) : null;
 }
 
+// Python enum repr: <ClassName.VALUE: 'str'> or <ClassName.VALUE: 42> → value
+function convertPythonEnums(s: string): string {
+  return s.replace(
+    /<[A-Za-z_][A-Za-z0-9_.]*:\s*('[^']*'|"[^"]*"|-?[\d.]+(?:[eE][+-]?\d+)?|[A-Za-z_][A-Za-z0-9_]*)\s*>/g,
+    (_, val) => val.trim(),
+  );
+}
+
+// Inside a Python object repr, convert keyword args: key=val → key:val
+function convertKeywordArgs(s: string): string {
+  let result = "";
+  let i = 0;
+  while (i < s.length) {
+    if (s[i] === '"' || s[i] === "'") {
+      const q = s[i];
+      result += s[i++];
+      while (i < s.length && s[i] !== q) {
+        if (s[i] === "\\") result += s[i++];
+        if (i < s.length) result += s[i++];
+      }
+      if (i < s.length) result += s[i++];
+      continue;
+    }
+    const m = s.slice(i).match(/^([A-Za-z_][A-Za-z0-9_]*)\s*=/);
+    if (m) {
+      result += m[1] + ":";
+      i += m[0].length;
+      continue;
+    }
+    result += s[i++];
+  }
+  return result;
+}
+
+// Python object repr: ClassName(key=val, ...) → {key: val, ...}, inside-out
+function convertPythonObjectReprs(s: string): string {
+  let prev = "";
+  while (prev !== s) {
+    prev = s;
+    let result = "";
+    let i = 0;
+    while (i < s.length) {
+      // Skip strings
+      if (s[i] === '"' || s[i] === "'") {
+        const q = s[i];
+        result += s[i++];
+        while (i < s.length && s[i] !== q) {
+          if (s[i] === "\\" && i + 1 < s.length) result += s[i++];
+          result += s[i++];
+        }
+        if (i < s.length) result += s[i++];
+        continue;
+      }
+      // Match ClassName( and find balanced closing )
+      const m = s.slice(i).match(/^([A-Za-z_][A-Za-z0-9_]*)\(/);
+      if (m) {
+        const nameEnd = i + m[1].length + 1; // position after (
+        let depth = 1;
+        let j = nameEnd;
+        let inStr: string | null = null;
+        while (j < s.length && depth > 0) {
+          const c = s[j];
+          if (inStr) {
+            if (c === "\\" && j + 1 < s.length) j++;
+            else if (c === inStr) inStr = null;
+          } else if (c === '"' || c === "'") {
+            inStr = c;
+          } else if (c === "(") {
+            depth++;
+          } else if (c === ")") {
+            if (--depth === 0) break;
+          }
+          j++;
+        }
+        if (depth === 0) {
+          const inner = s.slice(nameEnd, j);
+          result += "{" + convertKeywordArgs(inner) + "}";
+          i = j + 1;
+          continue;
+        }
+      }
+      result += s[i++];
+    }
+    s = result;
+  }
+  return s;
+}
+
 function preClean(input: string): string {
   let s = input;
   // Strip block comments
   s = s.replace(/\/\*[\s\S]*?\*\//g, "");
   // Strip line comments (avoid hitting inside strings: simple heuristic walks chars)
   s = stripLineComments(s);
-  // Replace bare undefined / NaN / Infinity with null (outside strings)
-  s = replaceOutsideStrings(s, /\b(undefined|NaN|Infinity|-Infinity)\b/g, "null");
+  // Python repr: convert enums and object reprs before other transforms
+  s = convertPythonEnums(s);
+  s = convertPythonObjectReprs(s);
+  // Replace bare undefined / NaN / Infinity / Python None with null (outside strings)
+  s = replaceOutsideStrings(s, /\b(undefined|NaN|Infinity|-Infinity|None)\b/g, "null");
+  // Replace Python True/False with JSON true/false (outside strings)
+  s = replaceOutsideStrings(s, /\bTrue\b/g, "true");
+  s = replaceOutsideStrings(s, /\bFalse\b/g, "false");
   // Convert single-quoted strings to double-quoted
   s = convertSingleQuotes(s);
   // Quote unquoted object keys
