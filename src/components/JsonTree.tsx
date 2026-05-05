@@ -11,6 +11,7 @@ type Props = {
   filter?: string;
   expandAllSignal?: number;
   collapseAllSignal?: number;
+  showCheckboxes?: boolean;
 };
 
 function typeOf(v: unknown): string {
@@ -66,6 +67,7 @@ function Node({
   expandAllSignal,
   collapseAllSignal,
   isArrayIndex,
+  showCheckboxes,
   data,
 }: NodeProps) {
   const [open, setOpen] = useState(depth < 2);
@@ -94,18 +96,27 @@ function Node({
 
   if (!matchesFilter) return null;
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleToggle = (e: React.SyntheticEvent) => {
     e.stopPropagation();
-    if (path.length === 0) return; // don't select root
+    if (path.length === 0) return;
     onSelect(path);
   };
 
+  const checkbox = showCheckboxes && path.length > 0 && (
+    <input
+      type="checkbox"
+      className="h-3.5 w-3.5 cursor-pointer accent-primary shrink-0"
+      checked={!!isSelected}
+      onChange={handleToggle}
+    />
+  );
+
   const labelEl = (
     <span
-      onClick={handleClick}
+      onClick={handleToggle}
       className={cn(
         "cursor-pointer rounded px-1 transition-colors hover:bg-accent",
-        isSelected && "bg-primary/10 text-primary font-semibold",
+        isSelected && !showCheckboxes && "bg-primary/10 text-primary font-semibold",
       )}
     >
       {isArrayIndex ? (
@@ -120,7 +131,9 @@ function Node({
     const pv = valuePreview(value);
     return (
       <div className="flex items-start gap-1 pl-5">
-        <span className="text-muted-foreground select-none">•</span>
+        {showCheckboxes && path.length > 0
+          ? checkbox
+          : <span className="text-muted-foreground select-none">•</span>}
         {labelEl}
         <span className="text-muted-foreground">:</span>
         <span className={cn("truncate", pv.cls)}>{pv.text}</span>
@@ -161,6 +174,7 @@ function Node({
             <ChevronRight className="h-3.5 w-3.5" />
           )}
         </button>
+        {checkbox}
         {labelEl}
         <span className="text-muted-foreground text-xs">{summary}</span>
       </div>
@@ -180,6 +194,7 @@ function Node({
               expandAllSignal={expandAllSignal}
               collapseAllSignal={collapseAllSignal}
               isArrayIndex={e.isArrayIndex}
+              showCheckboxes={showCheckboxes}
             />
           ))}
         </div>

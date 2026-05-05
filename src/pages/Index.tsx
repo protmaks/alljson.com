@@ -365,6 +365,7 @@ const Index = () => {
                   filter={filter}
                   expandAllSignal={expandSignal}
                   collapseAllSignal={collapseSignal}
+                  showCheckboxes={mode === "select"}
                 />
               ) : (
                 <div className="text-sm text-muted-foreground">
