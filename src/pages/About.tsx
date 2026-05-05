@@ -42,8 +42,8 @@ const About = () => {
             <li>Validate JSON, including a lenient parser (unquoted keys, trailing commas, single quotes).</li>
             <li>Auto-format and pretty-print JSON.</li>
             <li>Explore data as a collapsible tree with key filtering.</li>
-            <li>Click any field to copy its dot-notation path or build a SELECT statement.</li>
-            <li>Flatten an entire JSON document into SQL columns with one click.</li>
+            <li>Click a field to copy its dot-notation path; tick checkboxes in Select mode to build a SELECT statement.</li>
+            <li>Auto-flatten an entire JSON document into SQL columns — updates instantly as you type.</li>
             <li>Generate BigQuery / Snowflake style expressions, including <code>[OFFSET(i)]</code> for arrays.</li>
           </ul>
 

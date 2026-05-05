@@ -12,9 +12,9 @@ All processing happens locally in the browser. No data is uploaded.
 - Editor with line numbers. The line containing a parse error is highlighted and scrolled into view.
 - One-click formatting (pretty-print) and copy.
 - Interactive JSON tree with key filtering and expand/collapse all.
-- SQL builder. Select fields from the tree to generate a `SELECT` statement using dot-notation paths (BigQuery / Snowflake style, with `[OFFSET(i)]` for arrays).
-- "Convert all to SQL" flattens an entire document into a single `SELECT`.
-- Input, table name, and mode persist in `localStorage`.
+- SQL builder. Tick checkboxes in Select mode to add fields to a `SELECT` statement using dot-notation paths (BigQuery / Snowflake style, with `[OFFSET(i)]` for arrays).
+- Flatten-everything SQL generates automatically as soon as the JSON is valid.
+- Input and mode persist in `localStorage`.
 
 ## Tech stack
 
