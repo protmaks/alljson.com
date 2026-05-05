@@ -36,12 +36,10 @@ const SAMPLE = `{
 }`;
 
 const LS_INPUT = "alljson:input";
-const LS_TABLE = "alljson:table";
 const LS_MODE = "alljson:mode";
 
 const Index = () => {
   const [input, setInput] = useState<string>(() => localStorage.getItem(LS_INPUT) ?? SAMPLE);
-  const [table, setTable] = useState<string>(() => localStorage.getItem(LS_TABLE) ?? "my_table");
   const [mode, setMode] = useState<Mode>(
     () => (localStorage.getItem(LS_MODE) as Mode) ?? "path",
   );
@@ -60,9 +58,6 @@ const Index = () => {
   useEffect(() => {
     localStorage.setItem(LS_INPUT, input);
   }, [input]);
-  useEffect(() => {
-    localStorage.setItem(LS_TABLE, table);
-  }, [table]);
   useEffect(() => {
     localStorage.setItem(LS_MODE, mode);
   }, [mode]);
@@ -91,6 +86,15 @@ const Index = () => {
     }, 200);
     return () => clearTimeout(t);
   }, [input]);
+
+  useEffect(() => {
+    if (!parsed) {
+      setFlatSql("");
+      return;
+    }
+    const paths = flattenForSelect(parsed.value);
+    setFlatSql(buildSelect(paths, "my_table"));
+  }, [parsed]);
 
   const selectedKeys = useMemo(() => {
     return new Set(selected.map(pathToDotString));
@@ -139,18 +143,9 @@ const Index = () => {
     }
   };
 
-  const convertAll = () => {
-    if (!parsed) {
-      toast.error("Parse JSON first");
-      return;
-    }
-    const paths = flattenForSelect(parsed.value);
-    setFlatSql(buildSelect(paths, table || "my_table"));
-  };
-
   const selectSql = useMemo(
-    () => buildSelect(selected, table || "my_table"),
-    [selected, table],
+    () => buildSelect(selected, "my_table"),
+    [selected],
   );
 
   const currentPathStr = currentPath
@@ -277,12 +272,6 @@ const Index = () => {
           <div className="flex flex-wrap items-center justify-between gap-2">
             <h2 className="text-sm font-medium text-muted-foreground">Tree & SQL</h2>
             <div className="flex min-w-0 flex-wrap items-center gap-2">
-              <span className="text-xs text-muted-foreground">Table:</span>
-              <Input
-                value={table}
-                onChange={(e) => setTable(e.target.value)}
-                className="h-8 w-36 font-mono text-sm"
-              />
               <ToggleGroup
                 type="single"
                 value={mode}
@@ -392,9 +381,6 @@ const Index = () => {
                 {mode === "select" ? "Selected fields → SQL" : "Flatten everything"}
               </span>
               <div className="flex gap-2">
-                <Button size="sm" variant="default" onClick={convertAll} disabled={!parsed}>
-                  Convert all to SQL
-                </Button>
                 <Button
                   size="sm"
                   variant="outline"
@@ -416,7 +402,7 @@ const Index = () => {
                 ? selected.length
                   ? selectSql
                   : "-- Click fields in the tree to add them to SELECT"
-                : flatSql || '-- Click "Convert all to SQL" to flatten the JSON'}
+                : flatSql || "-- SQL will appear once JSON is valid"}
             </pre>
             <p className="mt-2 text-xs text-muted-foreground">
               Dialect: BigQuery / Snowflake (dot-notation, <code>[OFFSET(i)]</code> for arrays).
