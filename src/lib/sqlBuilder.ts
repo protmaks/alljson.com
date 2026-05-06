@@ -77,7 +77,20 @@ export function flattenForSelect(value: unknown, base: PathSegment[] = []): Path
       typeof value[0] === "object" &&
       !Array.isArray(value[0])
     ) {
-      return flattenForSelect(value[0], [...base, { kind: "index", index: 0 }]);
+      // Merge schemas from ALL elements so fields present only in later rows aren't dropped.
+      const seen = new Set<string>();
+      const merged: PathSegment[][] = [];
+      for (const elem of value) {
+        if (elem === null || typeof elem !== "object" || Array.isArray(elem)) continue;
+        for (const p of flattenForSelect(elem, [])) {
+          const key = pathToDotString(p);
+          if (!seen.has(key)) {
+            seen.add(key);
+            merged.push([...base, { kind: "index", index: 0 }, ...p]);
+          }
+        }
+      }
+      return merged;
     }
     out.push(base);
     return out;
