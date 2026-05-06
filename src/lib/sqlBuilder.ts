@@ -36,6 +36,13 @@ export function sanitizeAlias(raw: string): string {
   return s;
 }
 
+function pathToAliasString(segments: PathSegment[]): string {
+  return segments
+    .filter((s): s is { kind: "key"; name: string } => s.kind === "key")
+    .map((s) => s.name)
+    .join(".");
+}
+
 export function buildSelect(
   paths: PathSegment[][],
   table: string,
@@ -44,7 +51,7 @@ export function buildSelect(
   const used = new Set<string>();
   const lines = paths.map((p) => {
     const expr = pathToSqlExpression(p);
-    let alias = sanitizeAlias(pathToDotString(p));
+    let alias = sanitizeAlias(pathToAliasString(p));
     let candidate = alias;
     let n = 2;
     while (used.has(candidate)) candidate = `${alias}_${n++}`;
@@ -55,10 +62,23 @@ export function buildSelect(
 }
 
 // Walk JSON and emit a flat list of leaf-ish paths.
-// Objects are flattened to dot paths. Arrays are kept as a single column (no UNNEST).
+// Objects are flattened to dot paths. Arrays of objects are recursed into (using [OFFSET(0)]).
+// Arrays of primitives or empty arrays are kept as a single column.
 export function flattenForSelect(value: unknown, base: PathSegment[] = []): PathSegment[][] {
   const out: PathSegment[][] = [];
-  if (value === null || typeof value !== "object" || Array.isArray(value)) {
+  if (value === null || typeof value !== "object") {
+    out.push(base);
+    return out;
+  }
+  if (Array.isArray(value)) {
+    if (
+      value.length > 0 &&
+      value[0] !== null &&
+      typeof value[0] === "object" &&
+      !Array.isArray(value[0])
+    ) {
+      return flattenForSelect(value[0], [...base, { kind: "index", index: 0 }]);
+    }
     out.push(base);
     return out;
   }
@@ -71,7 +91,7 @@ export function flattenForSelect(value: unknown, base: PathSegment[] = []): Path
   for (const k of keys) {
     const v = obj[k];
     const next: PathSegment[] = [...base, { kind: "key", name: k }];
-    if (v !== null && typeof v === "object" && !Array.isArray(v)) {
+    if (v !== null && typeof v === "object") {
       out.push(...flattenForSelect(v, next));
     } else {
       out.push(next);
