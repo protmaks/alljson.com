@@ -51,7 +51,7 @@ export function buildSelect(
   const used = new Set<string>();
   const lines = paths.map((p) => {
     const expr = pathToSqlExpression(p);
-    let alias = sanitizeAlias(pathToAliasString(p));
+    const alias = sanitizeAlias(pathToAliasString(p));
     let candidate = alias;
     let n = 2;
     while (used.has(candidate)) candidate = `${alias}_${n++}`;

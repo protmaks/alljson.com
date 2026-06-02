@@ -232,7 +232,7 @@ function convertSingleQuotes(s: string): string {
 function quoteUnquotedKeys(s: string): string {
   // Match { or , followed by optional whitespace, an identifier, optional ws, then :
   return s.replace(
-    /([{,]\s*)([A-Za-z_$][A-Za-z0-9_$\-]*)(\s*:)/g,
+    /([{,]\s*)([A-Za-z_$][A-Za-z0-9_$-]*)(\s*:)/g,
     '$1"$2"$3',
   );
 }
