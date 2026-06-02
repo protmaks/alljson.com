@@ -1,9 +1,18 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { RobotEyeLogo } from "@/components/RobotEyeLogo";
 
 const About = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>About AllJSON — Free JSON Validator & SQL Builder</title>
+        <meta name="description" content="AllJSON is a free, fast, browser-based tool for validating JSON, exploring it as an interactive tree, and generating BigQuery/Snowflake-style SQL. No data leaves your device." />
+        <link rel="canonical" href="https://alljson.com/about" />
+        <meta property="og:title" content="About AllJSON — Free JSON Validator & SQL Builder" />
+        <meta property="og:description" content="Learn about AllJSON — a privacy-first JSON tool that runs entirely in your browser." />
+        <meta property="og:url" content="https://alljson.com/about" />
+      </Helmet>
       <header className="border-b border-border bg-card">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <Link to="/" className="flex items-center gap-3">

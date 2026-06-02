@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -154,6 +155,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>AllJSON — Validate JSON & Build SQL from JSON Online</title>
+        <meta name="description" content="Free online JSON validator and SQL builder. Paste messy JSON, explore it as an interactive tree, and generate BigQuery/Snowflake SQL by clicking fields. 100% client-side." />
+        <link rel="canonical" href="https://alljson.com/" />
+      </Helmet>
       {/* Header */}
       <header className="border-b border-border bg-card">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
